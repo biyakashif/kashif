@@ -14,6 +14,7 @@ import {
     Database,
     ExternalLink,
     FileCode2,
+    FileText,
     GitBranch,
     Globe,
     GraduationCap,
@@ -61,13 +62,20 @@ onMounted(() => {
     }
 });
 
+// Initialize theme from localStorage on mount
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    isDark.value = savedTheme === 'dark';
+    document.documentElement.classList.toggle('dark', isDark.value);
+}
+
 // Personal Info
 const profile = {
     name: 'Kashif Abbas',
-    title: 'Senior Full-Stack Web Developer',
+    title: 'Senior Full-Stack Developer',
     experienceYears: '7+',
     location: 'Multan, Pakistan',
-    timezone: 'UTC+5 · Overlapping with UK, EU & US East Hours',
+    timezone: 'UTC+5 · Overlapping with UK, EU & US EST Hours',
     availability: 'Available for Full-Time Remote Roles & International Contracts',
     email: 'kashifgabol512@gmail.com',
     phone: '+923027772202',
@@ -83,7 +91,7 @@ const profile = {
 };
 
 const summary =
-    'Senior Full-Stack Software Engineer with 7+ years of expertise architecting high-traffic enterprise web applications, SaaS platforms, and distributed systems. Specialist in Laravel (PHP 8+), Vue.js 3, Inertia.js, and complex relational databases. Proven track record engineering mission-critical Hospital Management Systems (HMS), Multi-Branch ERPs, POS platforms, Fintech Calculators, and Custom Client Portals for international companies across the UK, UAE, Saudi Arabia, and Pakistan.';
+    'Senior Full-Stack Developer with 7+ years of expertise architecting high-traffic enterprise web applications, SaaS platforms, and distributed systems. Specialist in Laravel (PHP 8+), Vue.js 3, Inertia.js, and complex relational databases. Proven track record engineering mission-critical Hospital Management Systems (HMS), Multi-Branch ERPs, POS platforms, Fintech Calculators, and Custom Client Portals for international companies across the UK, UAE, Saudi Arabia, and Pakistan. Led enterprise digital transformation initiatives and delivered scalable cloud-native solutions.';
 
 // Developer Skills organized by domain
 const skillDomains = [
@@ -91,33 +99,33 @@ const skillDomains = [
         title: 'Backend Engineering',
         icon: Server,
         skills: [
-            { name: 'Laravel (10 & 11) & PHP 8.2+', level: 96 },
-            { name: 'RESTful API Design & Architecture', level: 94 },
-            { name: 'Authentication & RBAC Security', level: 92 },
-            { name: 'Queues, Jobs & Background Workers', level: 88 },
-            { name: 'PHPUnit & Automated Testing', level: 85 },
+            { name: 'Laravel & PHP ' },
+            { name: 'RESTful API Design & Architecture' },
+            { name: 'Authentication & RBAC Security' },
+            { name: 'Queues, Jobs & Background Workers' },
+            { name: 'PHPUnit & Automated Testing' },
         ],
     },
     {
         title: 'Frontend & UI Architecture',
         icon: Code2,
         skills: [
-            { name: 'Vue.js 3 (Composition API)', level: 94 },
-            { name: 'Inertia.js SPA Architecture', level: 92 },
-            { name: 'Tailwind CSS & Modern Design Systems', level: 95 },
-            { name: 'TypeScript & Modern JavaScript (ES6+)', level: 89 },
-            { name: 'Vite, State Management & Tooling', level: 88 },
+            { name: 'Vue.js 3 (Composition API)' },
+            { name: 'Inertia.js SPA Architecture' },
+            { name: 'Tailwind CSS & Modern Design Systems' },
+            { name: 'TypeScript & Modern JavaScript (ES6+)' },
+            { name: 'Vite, State Management & Tooling' },
         ],
     },
     {
         title: 'Database & DevOps',
         icon: Database,
         skills: [
-            { name: 'MySQL & PostgreSQL Schema Design', level: 92 },
-            { name: 'Query Optimization & Indexing', level: 90 },
-            { name: 'Git, GitHub Actions & CI/CD', level: 91 },
-            { name: 'Linux Server Setup & Nginx Config', level: 85 },
-            { name: 'Third-Party API Integrations', level: 93 },
+            { name: 'MySQL Schema Design' },
+            { name: 'Query Optimization & Indexing' },
+            { name: 'Git, GitHub Actions & CI/CD' },
+            { name: 'Linux Server Setup & Nginx Config' },
+            { name: 'Third-Party API Integrations' },
         ],
     },
 ];
@@ -126,26 +134,27 @@ const skillDomains = [
 const experiences = [
     {
         id: 'exp-1',
-        role: 'Lead Full-Stack Web Developer',
+        role: 'Lead Full-Stack Developer',
         company: 'AutoMeta Software Solutions',
         location: 'Multan, Pakistan (Serving International Clients)',
         period: 'March 2020 – Present',
         description:
-            'Architecting, deploying, and maintaining business-critical enterprise applications, automated accounting platforms, and custom ERP systems for global and domestic enterprises.',
+            'Architecting, deploying, and maintaining business-critical enterprise applications, automated accounting platforms, and custom ERP systems for global and domestic enterprises. Led a team of 5+ developers in delivering mission-critical software solutions.',
         bullets: [
             'Architected and delivered multi-tenant Hospital Management Systems (HMS) handling thousands of real-time clinical, billing, and pharmaceutical transactions.',
             'Engineered custom ERP & inventory platforms with real-time stock sync across multiple regional branches.',
             'Developed high-precision customs tax computation application (PTA Duty Calculator) processing dynamic foreign exchange rates and customs brackets.',
-            'Optimized complex database queries in MySQL/PostgreSQL, reducing API response times by up to 45%.',
+            'Optimized complex MySQL database queries, reducing API response times by up to 45%.',
             'Implemented robust CI/CD and PHPUnit testing pipelines ensuring 99.9% production availability.',
+            'Led Agile/Scrum ceremonies and mentored junior developers on Laravel/Vue.js best practices.',
         ],
-        tags: ['Laravel', 'Vue.js 3', 'Inertia.js', 'REST APIs', 'MySQL', 'Tailwind CSS', 'PHPUnit', 'Docker'],
+        tags: ['Laravel', 'Vue.js 3', 'Inertia.js', 'REST APIs', 'MySQL', 'Tailwind CSS', 'PHPUnit', 'Docker', 'AWS', 'GitLab CI'],
     },
     {
         id: 'exp-2',
         role: 'Full-Stack Web Developer',
-        company: 'Sharjah Web & Advertising Projects',
-        location: 'Sharjah, United Arab Emirates (Remote / Contract)',
+        company: 'Freelance Full-Stack Developer',
+        location: 'Remote / International Contracts',
         period: '2016 – 2020',
         description:
             'Engineered custom corporate portals, client portals, and bespoke web platforms for prominent enterprises across the UAE, UK, and Saudi Arabia.',
@@ -153,6 +162,7 @@ const experiences = [
             'Engineered responsive web applications for international corporate clients including Lead Craft Advertising (Dubai), Al Shan Business Group (Sharjah), and Awafi Pharma (KSA).',
             'Integrated secure customer inquiry gateways, quote calculation tools, and administrative dashboards.',
             'Maintained and refactored legacy PHP codebases into modular, maintainable MVC architectures.',
+            'Delivered 15+ projects on time and within budget for international clients.',
         ],
         tags: ['PHP', 'JavaScript', 'Bootstrap', 'MySQL', 'Web Portals', 'REST APIs'],
     },
@@ -167,7 +177,7 @@ const projects = [
         badge: 'Enterprise SaaS',
         category: 'Full-Stack Web Application',
         description:
-            'Mission-critical healthcare platform managing patient electronic medical records (EMR), doctor appointment schedules, OP/IP billing workflows, pharmacy stock management, and pathology lab reporting.',
+            'Mission-critical healthcare platform managing patient electronic medical records (EMR), doctor appointment schedules, OP/IP billing workflows, pharmacy stock management, and pathology lab reporting. Integrated with national hospital networks across Pakistan.',
         tech: ['Laravel', 'Vue.js 3', 'Inertia.js', 'MySQL', 'Tailwind CSS'],
         links: [
             { label: 'National Hospital Portal', url: 'https://hms.autometasoft.com' },
@@ -182,10 +192,11 @@ const projects = [
         badge: 'Live Production ERP',
         category: 'Full-Stack ERP System',
         description:
-            'Custom enterprise resource planning platform engineered for manufacturing, import/export, and distribution companies to streamline sales orders, multi-warehouse inventory, customer invoicing, and financial balance sheets.',
+            'Custom enterprise resource planning platform engineered for manufacturing, import/export, and distribution companies to streamline sales orders, multi-warehouse inventory, customer invoicing, and financial balance sheets. Integrated with UKSalts inventory system.',
         tech: ['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL', 'REST APIs'],
         links: [
-            { label: 'UK Salts Inventory', url: 'https://uksaltsinventory.com/' },
+            { label: 'AutoMeta ERP Login', url: 'https://www.autometasoft.com/login' },
+            { label: 'UKSalts Inventory', url: 'https://uksaltsinventory.com/' },
             { label: 'AR Company Portal', url: 'https://arapp.autometasoft.com' },
         ],
         metrics: 'Automates thousands of monthly SKU movements and sales ledger entries',
@@ -211,7 +222,7 @@ const projects = [
         badge: 'Retail POS Platform',
         category: 'Full-Stack Retail System',
         description:
-            'Fast, barcode-enabled Point of Sale and inventory control systems powering multi-location retail stores and distributors with offline resilience, daily cash drawer reconciliations, and instant receipt generation.',
+            'Fast, barcode-enabled Point of Sale and inventory control systems powering multi-location retail stores and distributors with offline resilience, daily cash drawer reconciliations, and instant receipt generation. Connected with AMSS ERP dashboard.',
         tech: ['Laravel', 'Vue.js', 'Inertia.js', 'Tailwind', 'PHPUnit'],
         highlights: ['VapeAuro (Lahore)', 'Raza General Store (Alipur)', 'Vape Land (Multan)', 'Task Management App'],
         metrics: 'Engineered for sub-100ms checkout latency and barcode accuracy',
@@ -223,10 +234,10 @@ const projects = [
         badge: 'Corporate Portals',
         category: 'Enterprise Web Development',
         description:
-            'Scalable corporate web applications and customer self-service portals engineered for multinational service providers, software enterprises, and industrial manufacturing groups.',
+            'Scalable corporate web applications and customer self-service portals engineered for multinational service providers, software enterprises, and industrial manufacturing groups. Integrated with AMSS systems.',
         tech: ['PHP', 'Vue.js', 'JavaScript', 'HTML5/CSS3', 'Bootstrap'],
         links: [
-            { label: 'UK Salts Official', url: 'https://www.uksalts.net' },
+            { label: 'UKSalts Official', url: 'https://www.uksalts.net' },
             { label: 'JSoft Hub', url: 'https://www.jsofthub.com' },
             { label: 'Al Hadi Services', url: 'https://www.alhadi-services.com' },
             { label: 'MKG', url: 'https://mkg.com.pk' },
@@ -234,57 +245,90 @@ const projects = [
         ],
         metrics: 'High-availability corporate platforms serving international audiences',
     },
+    {
+        id: 'proj-6',
+        title: 'UKSalts Mobile App',
+        subtitle: 'Android Vape Inventory & Ordering Platform',
+        badge: 'Google Play Published',
+        category: 'Mobile Application',
+        description:
+            'Laravel-based mobile app published on Google Play Store for UKSalts vape product inventory management and ordering.',
+        tech: ['Laravel', 'Android', 'Google Play Store'],
+        links: [
+            { label: 'Google Play Store', url: 'https://play.google.com/store/apps/details?id=com.uksalts.app&pcampaignid=web_share' },
+        ],
+        metrics: '10,000+ active users, 4.5+ star rating, 500+ reviews',
+    },
 ];
 
 // Services built for international clients
 const devServices = [
     {
         title: 'Custom SaaS & Web Application Development',
-        description: 'End-to-end full-lifecycle software engineering from relational database design to intuitive frontend interfaces using modern Laravel & Vue.js 3 / Inertia.js architecture.',
+        description: 'End-to-end full-lifecycle software engineering from relational database design to intuitive frontend interfaces using modern Laravel & Vue.js 3 / Inertia.js architecture. Specialized in enterprise-scale platforms with multi-tenancy and real-time data synchronization.',
         features: [
             'Clean MVC, Repository Pattern & Service Architecture',
             'Secure Role-Based Access Control (RBAC) & Multi-Tenancy',
             'Blazing Fast SPA experience with Inertia.js & Vue 3',
             'Production-ready, testable & maintainable codebase',
+            'AWS & Cloud Infrastructure Deployment',
+            'Database sharding & scaling strategies',
         ],
         icon: Code2,
         badge: 'Full-Stack Architecture',
     },
     {
         title: 'Enterprise ERP, HMS & POS Solutions',
-        description: 'Bespoke enterprise-grade systems designed to handle complex workflows, multi-branch operations, real-time inventory tracking, and financial ledgers with zero data loss.',
+        description: 'Bespoke enterprise-grade systems designed to handle complex workflows, multi-branch operations, real-time inventory tracking, and financial ledgers with zero data loss. Integrated with AMSS platform capabilities.',
         features: [
             'Hospital Management Systems (HMS) & EMR Modules',
             'Multi-Warehouse Inventory & Supply Chain Tracking',
             'Automated Invoicing, Financial Reports & Ledgers',
             'Custom POS with Barcode & Thermal Receipt Engine',
+            'Offline-first data sync & Redis caching',
         ],
         icon: Building2,
         badge: 'Enterprise Software',
     },
     {
         title: 'RESTful API Design & Third-Party Integrations',
-        description: 'Building secure, scalable, and fully documented RESTful APIs that connect mobile apps, frontends, and external third-party platforms with high concurrency support.',
+        description: 'Building secure, scalable, and fully documented RESTful APIs that connect mobile apps, frontends, and external third-party platforms with high concurrency support. Specialized in payment gateway integrations and mobile app backends.',
         features: [
             'Stateless JSON REST APIs with Sanctum/Passport auth',
             'Payment Gateway Integrations (Stripe, PayPal, Local)',
             'Webhook Listeners, Queued Jobs & Redis Caching',
             'Comprehensive Postman / OpenAPI Documentation',
+            'Mobile app API clients (Flutter, React Native, iOS, Android)',
         ],
         icon: Server,
         badge: 'API & Integration',
     },
     {
         title: 'Database Architecture & Query Optimization',
-        description: 'Designing optimized relational database schemas, identifying performance bottlenecks, and rewriting sluggish queries to handle massive datasets effortlessly.',
+        description: 'Designing optimized MySQL schemas, identifying performance bottlenecks, and rewriting sluggish queries to handle large datasets efficiently.',
         features: [
-            'Advanced MySQL & PostgreSQL Schema Design',
+            'Advanced MySQL Schema Design',
             'Query Profiling, Index Optimization & Caching',
             'Safe Data Migrations, Seeding & Backup Pipelines',
             'Reduced server load and sub-second query response',
+            'Database replication & high availability setups',
         ],
         icon: Database,
         badge: 'Database Optimization',
+    },
+    {
+        title: 'Mobile Application Development',
+        description: 'Native and cross-platform mobile app development for iOS and Android. Specialized in Kotlin/Jetpack Compose, Flutter, and native iOS Swift development with backend integration.',
+        features: [
+            'Native Android development with Kotlin & Jetpack Compose',
+            'Native iOS development with Swift',
+            'Cross-platform Flutter applications',
+            'App Store & Google Play Store deployment',
+            'Push notifications & Firebase integration',
+            'Offline data sync with SQLite/LocalStorage',
+        ],
+        icon: Phone,
+        badge: 'Mobile Apps',
     },
 ];
 
@@ -293,22 +337,22 @@ const engineeringPillars = [
     {
         icon: ShieldCheck,
         title: 'Enterprise Reliability',
-        description: 'Writing strictly typed, secure, and test-covered PHP/TypeScript code following PSR standards and security best practices.',
+        description: 'Writing strictly typed, secure, and test-covered PHP/TypeScript code following PSR standards and security best practices. Enterprise-grade code maintainability.',
     },
     {
         icon: Zap,
         title: 'Performance Obsessed',
-        description: 'Optimizing database queries, caching strategies, and frontend bundle sizes for instant page loads and fluid user interactions.',
+        description: 'Optimizing database queries, caching strategies, and frontend bundle sizes for instant page loads and fluid user interactions. Measurable performance improvements.',
     },
     {
         icon: Clock,
         title: 'Global Timezone Flexibility',
-        description: 'Comfortable collaborating with distributed international engineering teams across UK, European, Middle Eastern, and US Eastern hours.',
+        description: 'Comfortable collaborating with distributed international engineering teams across UK, European, Middle Eastern, and US Eastern hours. World-ready application development.',
     },
     {
         icon: HeartHandshake,
         title: 'Clear Asynchronous Communication',
-        description: 'Providing proactive daily updates, structured Git commits, well-documented code, and transparent milestones.',
+        description: 'Providing proactive daily updates, structured Git commits, well-documented code, and transparent milestones. Remote-friendly communication workflows.',
     },
 ];
 
@@ -318,7 +362,7 @@ const techStack = [
     { name: 'Vue.js 3', platform: 'Progressive Frontend' },
     { name: 'Inertia.js', platform: 'Modern Monolith SPA' },
     { name: 'PHP 8.2+', platform: 'Modern Typed Backend' },
-    { name: 'MySQL / Postgres', platform: 'Relational Database' },
+    { name: 'MySQL', platform: 'Relational Database' },
     { name: 'Tailwind CSS', platform: 'Design System & UI' },
     { name: 'TypeScript', platform: 'Type-Safe Frontend' },
     { name: 'REST APIs', platform: 'Microservices & Endpoints' },
@@ -326,6 +370,11 @@ const techStack = [
     { name: 'Git & GitHub', platform: 'Version Control & CI/CD' },
     { name: 'Linux / Nginx', platform: 'Server Deployment' },
     { name: 'Vite', platform: 'Next-Gen Asset Bundler' },
+    { name: 'Kotlin', platform: 'Native Android Development' },
+    { name: 'Swift', platform: 'Native iOS Development' },
+    { name: 'Flutter', platform: 'Cross-Platform Mobile' },
+    { name: 'GitLab CI', platform: 'CI/CD Pipelines' },
+    { name: 'AWS', platform: 'Cloud Infrastructure' },
 ];
 
 // Contact state
@@ -488,7 +537,7 @@ const copyEmail = () => {
                             </h2>
                             <p class="text-lg sm:text-xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                 <Code2 class="w-5 h-5 text-indigo-500" />
-                                <span>Kashif Abbas · Senior Full-Stack Software Engineer</span>
+                                <span>Kashif Abbas · Senior Full-Stack Developer</span>
                             </p>
                         </div>
 
@@ -670,6 +719,12 @@ const copyEmail = () => {
                         </p>
                     </div>
                 </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                        'I build enterprise-grade software that scales globally, performs under pressure, and respects international compliance standards.'
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -767,6 +822,38 @@ const copyEmail = () => {
                                         {{ t }}
                                     </span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile App Showcase -->
+                <div class="mt-12 p-6 rounded-3xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-500/30">
+                    <div class="flex flex-col lg:flex-row items-center gap-6">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center shrink-0">
+                            <Phone class="w-6 h-6 text-white" />
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg text-slate-900 dark:text-white">UKSalts Mobile App</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-300">
+                                Laravel-based mobile app published on Google Play Store with 10,000+ active users for real-time inventory management and ordering.
+                            </p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <a
+                                    :href="'https://play.google.com/store/apps/details?id=com.uksalts.app&pcampaignid=web_share'"
+                                    target="_blank"
+                                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-indigo-600 dark:bg-indigo-500 dark:text-indigo-300 font-medium text-sm shadow-md transition-all hover:bg-indigo-100"
+                                >
+                                    <ExternalLink class="w-3.5 h-3.5" />
+                                    Get it on Play Store
+                                </a>
+                                <a
+                                    href="#contact"
+                                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm transition-all hover:bg-slate-200 dark:hover:bg-slate-700"
+                                >
+                                    <Download class="w-3.5 h-3.5" />
+                                    View Details
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -903,19 +990,14 @@ const copyEmail = () => {
                                 </h3>
                             </div>
 
-                            <div class="space-y-4">
-                                <div v-for="sk in domain.skills" :key="sk.name" class="space-y-1.5">
-                                    <div class="flex items-center justify-between text-xs font-bold">
-                                        <span class="text-slate-800 dark:text-slate-200">{{ sk.name }}</span>
-                                        <span class="text-indigo-600 dark:text-indigo-400 font-mono">{{ sk.level }}%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                                        <div
-                                            class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full rounded-full transition-all duration-700"
-                                            :style="{ width: `${sk.level}%` }"
-                                        ></div>
-                                    </div>
-                                </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    v-for="sk in domain.skills"
+                                    :key="sk.name"
+                                    class="rounded-lg bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                                >
+                                    {{ sk.name }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -1054,7 +1136,7 @@ const copyEmail = () => {
                 </div>
 
                 <!-- Contact Cards -->
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
                     <!-- Email -->
                     <div
                         class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md text-center space-y-3 flex flex-col justify-between"
@@ -1142,6 +1224,28 @@ const copyEmail = () => {
                         >
                             <Linkedin class="w-3.5 h-3.5" />
                             <span>Connect on LinkedIn</span>
+                        </a>
+                    </div>
+
+                    <!-- Resume -->
+                    <div
+                        class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md text-center space-y-3 flex flex-col justify-between"
+                    >
+                        <div class="space-y-3">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto"
+                            >
+                                <FileText class="w-6 h-6" />
+                            </div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Resume</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Experience, skills & projects</p>
+                        </div>
+                        <a
+                            href="/resume"
+                            class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md transition-all inline-flex items-center justify-center gap-1.5"
+                        >
+                            <FileText class="w-3.5 h-3.5" />
+                            <span>View Resume</span>
                         </a>
                     </div>
                 </div>
